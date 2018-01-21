@@ -26,6 +26,7 @@ rankall <- function(outcome, num = "best") {
   ## Return a data frame with the hospital names and the
   ## (abbreviated) state name
   
+  ra.env <- new.env()
   
   # read in file in current working directory
   hc_ooc <- read.csv("outcome-of-care-measures.csv", colClasses = "character", na.strings="Not Available", stringsAsFactors=FALSE)
@@ -77,16 +78,33 @@ rankall <- function(outcome, num = "best") {
   allstates <- allstates[complete.cases(allstates),]
   
   # worst = last
-  if (num == "worst") { num <- nrow(allstates)}
+  # if (num == "worst") { num <- nrow(allstates)}
   
   # go ahead and bail if we don't have enough rows 
-  if (num > nrow(allstates)) {
-    return(NA)
-  }
+  #if (num > nrow(allstates)) {
+  #  return(NA)
+  #}
 
   # using order(), reorder the frame
-  ranked <- allstates[order(allstates[3], allstates[1]) , ]
+  allranked <- allstates[order(allstates$state, allstates$measure, allstates$hospital) , ]
 
-  # return the hospital name of the numteenth row  
-  return(ranked[num , 1])
+  # s <- split(allranked, allranked$state)
+  # firsts <- lapply(s, function (x) { return(head(x, 1)) } )
+  
+  if (num == "worst") {
+    firsts <- by(allranked, allranked$state, function(x) { return(x[nrow(x),])} )
+  }
+  else {
+    firsts <- by(allranked, allranked$state, function(x) { num = get('num', envir=ra.env)
+      return(x[num,])} )
+  }
+  #firsts <- sapply(s, allranked$state, function(x) { num = get('num', envir=ra.env)
+   #                                                     return(x[num])} )
+  # return the unsplit matrix/frame
+  # eliminate NAs
+
+  #final <- firsts[complete.cases(firsts),]
+  final <- do.call(rbind, firsts)
+  # final <- final[complete.cases(final) , ]
+  return(final)
 }
