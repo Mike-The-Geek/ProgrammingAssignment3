@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1516252426990.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "94A5416A",
+    "lastKnownWriteTime" : 1516514019,
+    "last_content_update" : 1516514019100,
+    "path" : "~/Coursera/ProgrammingAssignment3/best.R",
+    "project_path" : "best.R",
+    "properties" : {
+        "cursorPosition" : "21,1",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : true,
+    "source_window" : "",
+    "type" : "r_source"
+}
